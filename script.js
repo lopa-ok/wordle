@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.code === 'Space' || event.code === 'Enter') {
             event.preventDefault();
             submitGuess();
+        } else if (event.code === 'Backspace') {
+            handleDelete();
         }
     });
 
@@ -44,11 +46,26 @@ function clearGameBoard() {
     }
 }
 
-function submitGuess() {
+async function validateWord(word) {
+    const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+    if (!response.ok) {
+        return false;
+    }
+    const data = await response.json();
+    return data.length > 0;
+}
+
+async function submitGuess() {
     const guessInput = document.getElementById('guess-input');
     const guess = guessInput.value.toLowerCase();
     if (guess.length !== 5) {
         setMessage('Guess must be 5 letters long.');
+        return;
+    }
+
+    const isValidWord = await validateWord(guess);
+    if (!isValidWord) {
+        setMessage('Please enter a valid English word.');
         return;
     }
 
@@ -89,4 +106,14 @@ function checkGuess() {
 function setMessage(message) {
     const messageDiv = document.getElementById('message');
     messageDiv.textContent = message;
+}
+
+function handleKeyboardClick(letter) {
+    const guessInput = document.getElementById('guess-input');
+    guessInput.value += letter;
+}
+
+function handleDelete() {
+    const guessInput = document.getElementById('guess-input');
+    guessInput.value = guessInput.value.slice(0, -1);
 }
