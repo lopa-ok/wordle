@@ -1,33 +1,87 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Press Start 2P', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0;
-  padding: 0;
   height: 100vh;
   justify-content: center;
   background-color: #f0f0f0;
 }
 
-#game-board {
+.container {
+  text-align: center;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.game-board {
   display: grid;
   grid-template-columns: repeat(5, 50px);
-  gap: 5px;
+  gap: 10px;
+  justify-content: center;
   margin-bottom: 20px;
 }
 
 .tile {
   width: 50px;
   height: 50px;
-  border: 1px solid #ddd;
+  border: 2px solid #d3d6da;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.5em;
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 5px;
   background-color: #fff;
 }
 
+.virtual-keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.key {
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+  border: none;
+  background-color: #d3d6da;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.key.special {
+  width: 60px;
+}
+
+.key:hover {
+  background-color: #a4a4a4;
+}
+
+.message {
+  margin-top: 20px;
+  font-size: 18px;
+}
 .correct {
   background-color: green;
   color: white;
@@ -48,22 +102,14 @@ body {
   font-size: 1.2em;
   color: red;
 }
-#virtual-keyboard {
-  display: grid;
-  grid-template-columns: repeat(7, 40px);
-  gap: 5px;
-  margin-top: 20px;
-}
-
-.key {
-  width: 40px;
-  height: 40px;
-  font-size: 1em;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  cursor: pointer;
-}
-
-.special {
-  background-color: #f0f0f0;
+#guess-input {
+  width: calc(5 * 50px + 4 * 10px); /* lazy move */
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Press Start 2P', sans-serif;
+  border: 2px solid #d3d6da;
+  border-radius: 5px;
+  padding: 10px;
+  outline: none;
 }
