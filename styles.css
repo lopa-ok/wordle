@@ -83,17 +83,17 @@ h1 {
   font-size: 18px;
 }
 .correct {
-  background-color: green;
+  background-color: #42f742;
   color: white;
 }
 
 .present {
-  background-color: yellow;
-  color: black;
+  background-color: #ffff39;
+  color: white;
 }
 
 .absent {
-  background-color: grey;
+  background-color: #4f4f4f;
   color: white;
 }
 

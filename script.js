@@ -106,14 +106,39 @@ function checkGuess() {
 function setMessage(message) {
     const messageDiv = document.getElementById('message');
     messageDiv.textContent = message;
+    
+    if (message.includes('Congratulations') || message.includes('no more guesses left')) {
+        setTimeout(() => {
+            startNewGame();
+        }, 3000);
+    }
 }
+
 
 function handleKeyboardClick(letter) {
     const guessInput = document.getElementById('guess-input');
-    guessInput.value += letter;
+    if (guessInput.value.length < 5) {
+        guessInput.value += letter;
+    }
 }
+
 
 function handleDelete() {
     const guessInput = document.getElementById('guess-input');
-    guessInput.value = guessInput.value.slice(0, -1);
+    const cursorStart = guessInput.selectionStart;
+    const cursorEnd = guessInput.selectionEnd;
+
+    if (cursorStart !== cursorEnd) {
+        const valueBeforeSelection = guessInput.value.slice(0, cursorStart);
+        const valueAfterSelection = guessInput.value.slice(cursorEnd);
+        guessInput.value = valueBeforeSelection + valueAfterSelection;
+        guessInput.setSelectionRange(cursorStart, cursorStart);
+    } else if (cursorStart > 0) {
+        const newValue = guessInput.value.slice(0, cursorStart - 1) + guessInput.value.slice(cursorStart);
+        guessInput.value = newValue;
+        guessInput.setSelectionRange(cursorStart - 1, cursorStart - 1);
+    }
 }
+
+
+
