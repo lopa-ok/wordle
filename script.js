@@ -1,14 +1,42 @@
-const targetWord = 'apple'; //ill add some sort of way later to have more words 
 const maxGuesses = 6;
+let targetWord;
 let currentGuess = '';
-let guessesRemaining = maxGuesses;
+let guessesRemaining;
 
 document.addEventListener('DOMContentLoaded', () => {
-    createGameBoard();
+    startNewGame();
+
+
+    document.addEventListener('keydown', (event) => {
+        if (event.code === 'Space' || event.code === 'Enter') {
+            event.preventDefault();
+            submitGuess();
+        }
+    });
+
+    const guessInput = document.getElementById('guess-input');
+    guessInput.addEventListener('input', () => {
+        guessInput.value = guessInput.value.replace(/[^a-zA-Z]/g, '').toLowerCase();
+    });
 });
 
-function createGameBoard() {
+async function fetchRandomWord() {
+    const response = await fetch('https://random-word-api.herokuapp.com/word?length=5');
+    const words = await response.json();
+    return words[0].toLowerCase();
+}
+
+async function startNewGame() {
+    targetWord = await fetchRandomWord();
+    guessesRemaining = maxGuesses;
+    currentGuess = '';
+    clearGameBoard();
+    setMessage('');
+}
+
+function clearGameBoard() {
     const gameBoard = document.getElementById('game-board');
+    gameBoard.innerHTML = '';
     for (let i = 0; i < maxGuesses * 5; i++) {
         const tile = document.createElement('div');
         tile.classList.add('tile');
